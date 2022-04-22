@@ -1,3 +1,5 @@
+package lib;
+
 import lib.frontend.Parser;
 import lib.frontend.Source;
 import pascal.PascalParserTD;
