@@ -23,7 +23,7 @@ public abstract class Scanner {
      * @return the next token
      * @throws Exception if an error occurred.
      */
-    public abstract Token extractToken() throws Exception;
+    protected abstract Token extractToken() throws Exception;
 
     public char currentChar() throws Exception{
         return source.currentChar();

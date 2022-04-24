@@ -5,6 +5,7 @@ import lib.FrontendFactory;
 import lib.backend.Backend;
 import lib.frontend.Parser;
 import lib.frontend.Source;
+import lib.frontend.TokenType;
 import lib.intermediate.ICode;
 import lib.intermediate.SymTab;
 import lib.message.Message;
@@ -58,15 +59,15 @@ public class Pascal {
             if(!(operation.equalsIgnoreCase("compile") || operation.equalsIgnoreCase("execute"))) throw new Exception();
 
             int i = 0;
-            var flags = "";
+            StringBuilder flags = new StringBuilder();
 
              while ((++ i < args.length) && (args[i].charAt(0) == '-')){
-                 flags += args[i].substring(1);
+                 flags.append(args[i].substring(1));
              }
              if (i < args.length) {
                  var path = args[i];
 
-                 new Pascal(operation,path,flags);
+                 new Pascal(operation,path, flags.toString());
              }else throw new Exception();
         }catch (Exception ex){
             System.out.println(USAGE);
@@ -93,8 +94,17 @@ public class Pascal {
     }
     private static final String PARSER_SUMMARY_FORMAT =
             "\n%,20d source lines."+
-            "\n%,20d syntax errors." +
-            "\n%,20.2f seconds total parsing time";
+             "\n%,20d syntax errors." +
+             "\n%,20.2f seconds total parsing time\n";
+
+    private static final String TOKEN_FORMAT =
+            ">>> %-15s line=%03d, pos=%2d, text=\"%s\" \n";
+
+    private static final String VALUE_FORMAT =
+            ">>>                value=%s\n";
+
+    private static final int PREFIX_WIDTH = 5;
+
 
     private class ParserMessageListener implements MessageListener{
 
@@ -103,13 +113,56 @@ public class Pascal {
             var messageType = message.getType();
 
             switch (messageType){
+                case TOKEN -> {
+                    var body = (Object[]) message.getBody();
+                    int line = (int) body[0];
+                    int position = (int) body[1];
+                    var tokenType = (TokenType) body[2];
+                    var tokenText = (String) body[3];
+                    var tokenValue = body[4];
+                    System.out.printf(TOKEN_FORMAT,
+                            tokenType,
+                            line,
+                            position,
+                            tokenText);
+
+                    if (tokenValue != null){
+                        if(tokenType == PascalTokenType.STRING){
+                            tokenValue ="\"" + tokenValue + "\"";
+                        }
+
+                        System.out.println(String.format(VALUE_FORMAT,tokenValue));
+                    }
+                }
+                case SYNTAX_ERROR -> {
+                    var body = (Object[])message.getBody();
+                    int lineNumber = (int) body[0];
+                    int position = (int) body[1];
+                    var tokenText = (String) body[2];
+                    var errorMessage = (String) body[3];
+
+                    int spaceCount = PREFIX_WIDTH + position;
+
+                    var flagBuffer = new StringBuilder();
+
+                    for (int i = 1; i < spaceCount; ++i){
+                        flagBuffer.append(' ');
+                    }
+
+                    flagBuffer.append("^\n*** ").append(errorMessage);
+
+                    if(tokenText != null){
+                        flagBuffer.append(" [at \"").append(tokenText).append("\"]");
+                    }
+                    System.out.println(flagBuffer.toString());
+                }
                 case PARSER_SUMMARY -> {
                     var body = (Number[])message.getBody();
                     int statementCount = (int)body[0];
                     int syntaxErrors = (int)body[1];
                     float elapsedTime = (float) body[2];
 
-                    System.out.printf(PARSER_SUMMARY_FORMAT,statementCount,syntaxErrors,elapsedTime);
+                    System.out.println(String.format(PARSER_SUMMARY_FORMAT,statementCount,syntaxErrors,elapsedTime));
                 }
             }
         }
@@ -117,8 +170,8 @@ public class Pascal {
 
     private static final String INTERPRETER_SUMMARY_FORMAT =
             "\n%,20d statements executed."+
-            "\n,20d runtime errors." +
-            "\n$,20.2f seconds total execution time \n";
+            "\n%,20d runtime errors." +
+            "\n%,20.2f seconds total execution time \n";
 
     private static final String COMPILER_SUMMARY_FORMAT =
             "\n%,20d instructions generated."+

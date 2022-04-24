@@ -1,13 +1,13 @@
 package pascal;
 
-import lib.frontend.EOFToken;
-import lib.frontend.Parser;
-import lib.frontend.Scanner;
-import lib.frontend.Token;
+import lib.frontend.*;
 import lib.message.Message;
 import lib.message.MessageType;
 
+import java.io.IOException;
+
 public class PascalParserTD extends Parser {
+    protected static PascalErrorHandler errorHandler = new PascalErrorHandler();
 
     public PascalParserTD(Scanner scanner) {
         super(scanner);
@@ -17,19 +17,39 @@ public class PascalParserTD extends Parser {
     public void parse() throws Exception {
         Token token;
         var startTime = System.currentTimeMillis();
-        while (!((token = nextToken()) instanceof EOFToken)) {}
 
-        var elapsedTime = (System.currentTimeMillis() - startTime) /1000f;
+        try {
+            while (!((token = nextToken()) instanceof EOFToken)) {
+                var tokenType = token.getType();
 
-        sendMessage(new Message(MessageType.PARSER_SUMMARY, new Number[] {
-                token.getLineNum(),
-                getErrorCount(),
-                elapsedTime
-        }));
+                if (tokenType != PascalTokenType.ERROR) {
+
+                    sendMessage(new Message(MessageType.TOKEN, new Object[]{
+                            token.getLineNum(),
+                            token.getPosition(),
+                            tokenType,
+                            token.getText(),
+                            token.getValue()
+                    }));
+                } else {
+                    errorHandler.flag(token, (PascalErrorCode) token.getValue(), this);
+                }
+            }
+
+            var elapsedTime = (System.currentTimeMillis() - startTime) / 1000f;
+
+            sendMessage(new Message(MessageType.PARSER_SUMMARY, new Number[]{
+                    token.getLineNum(),
+                    getErrorCount(),
+                    elapsedTime
+            }));
+        }catch (IOException ex){
+            errorHandler.abortTranslation(PascalErrorCode.IO_ERROR,this);
+        }
     }
 
     @Override
-    public int getErrorCount() {
-        return 0;
+    protected int getErrorCount() {
+        return errorHandler.getErrorCount();
     }
 }

@@ -25,7 +25,7 @@ public abstract class Parser  implements MessageProducer {
     }
     public abstract void parse() throws Exception;
 
-    public abstract int getErrorCount();
+    protected abstract int getErrorCount();
 
     public Token currentToken(){
         return scanner.currentToken();
