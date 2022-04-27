@@ -22,16 +22,16 @@ public class PascalParserTD extends Parser {
             while (!((token = nextToken()) instanceof EOFToken)) {
                 var tokenType = token.getType();
 
-                if (tokenType != PascalTokenType.ERROR) {
+                if(tokenType == PascalTokenType.IDENTIFIER){
+                    var name = token.getText().toLowerCase();
 
-                    sendMessage(new Message(MessageType.TOKEN, new Object[]{
-                            token.getLineNum(),
-                            token.getPosition(),
-                            tokenType,
-                            token.getText(),
-                            token.getValue()
-                    }));
-                } else {
+                    var entry = symTabStack.lookup(name);
+
+                    if(entry == null) entry = symTabStack.enterLocal(name);
+
+                    entry.appendLineNumber(token.getLineNum());
+                }
+                else if (tokenType == PascalTokenType.ERROR) {
                     errorHandler.flag(token, (PascalErrorCode) token.getValue(), this);
                 }
             }

@@ -1,9 +1,17 @@
+lib\SymTabFactory.class
+lib\intermediate\SymTabEntry.class
 pascal\tokens\PascalStringToken.class
 pascal\PascalErrorHandler.class
 pascal\tokens\PascalNumberToken.class
 pascal\tokens\PascalWordToken.class
+lib\intermediate\implementation\SymTabEntryImpl.class
+lib\intermediate\SymTabKey.class
+lib\CrossReferencer.class
 pascal\PascalToken.class
 pascal\tokens\PascalSpecialSymbolToken.class
+lib\intermediate\implementation\SymTabImpl.class
+lib\intermediate\implementation\SymTabStackImpl.class
+lib\intermediate\SymTabStack.class
 pascal\PascalErrorCode.class
 pascal\tokens\PascalErrorToken.class
 pascal\PascalTokenType.class

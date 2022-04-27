@@ -1,6 +1,7 @@
 package pascal;
 
 import lib.BackendFactory;
+import lib.CrossReferencer;
 import lib.FrontendFactory;
 import lib.backend.Backend;
 import lib.frontend.Parser;
@@ -8,6 +9,7 @@ import lib.frontend.Source;
 import lib.frontend.TokenType;
 import lib.intermediate.ICode;
 import lib.intermediate.SymTab;
+import lib.intermediate.SymTabStack;
 import lib.message.Message;
 import lib.message.MessageListener;
 
@@ -18,7 +20,7 @@ public class Pascal {
     private Parser parser;
     private Source source;
     private ICode iCode;
-    private SymTab symTab;
+    private SymTabStack symTabStack;
     private Backend backend;
 
     public Pascal(String operation, String filePath, String flags){
@@ -38,9 +40,16 @@ public class Pascal {
             source.close();
 
             iCode = parser.getiCode();
-            symTab = parser.getSymTab();
+            symTabStack = parser.getSymTabStack();
 
-            backend.process(iCode,symTab);
+            if(xref){
+
+                var crossReferencer = new CrossReferencer();
+
+                crossReferencer.print(symTabStack);
+            }
+
+            backend.process(iCode,symTabStack);
         }catch (Exception ex){
             System.out.println("***** Internal translator error ******");
 

@@ -1,18 +1,20 @@
 package lib.frontend;
 
+import lib.SymTabFactory;
 import lib.intermediate.ICode;
 import lib.intermediate.SymTab;
+import lib.intermediate.SymTabStack;
 import lib.message.Message;
 import lib.message.MessageHandler;
 import lib.message.MessageListener;
 import lib.message.MessageProducer;
 
 public abstract class Parser  implements MessageProducer {
-    protected static SymTab symTab;
+    protected static SymTabStack symTabStack;
     protected static MessageHandler messageHandler;
 
     static {
-        symTab = null;
+        symTabStack = SymTabFactory.createSymTabStack();
         messageHandler = new MessageHandler();
     }
 
@@ -49,8 +51,8 @@ public abstract class Parser  implements MessageProducer {
         messageHandler.sendMessage(message);
     }
 
-    public static SymTab getSymTab() {
-        return symTab;
+    public static SymTabStack getSymTabStack() {
+        return symTabStack;
     }
 
     public static MessageHandler getMessageHandler() {
