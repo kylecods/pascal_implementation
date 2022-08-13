@@ -2,6 +2,7 @@ package pascal;
 
 public enum PascalErrorCode {
     ALREADY_FORWARDED("Already specified in FOWARD"),
+    IDENTIFIER_UNDEFINED("Undefined identifier"),
     IDENTIFIER_REDEFINED("Redefined identifier"),
     INCOMPATIBLE_ASSIGNMENT("Incompatible assignment"),
     INCOMPATIBLE_TYPES("Incompatible types"),

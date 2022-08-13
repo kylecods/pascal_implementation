@@ -1,39 +1,51 @@
 package pascal;
 
+import lib.ICodeFactory;
 import lib.frontend.*;
+import lib.intermediate.ICodeNode;
 import lib.message.Message;
 import lib.message.MessageType;
+import pascal.parsers.StatementParser;
 
 import java.io.IOException;
+
 
 public class PascalParserTD extends Parser {
     protected static PascalErrorHandler errorHandler = new PascalErrorHandler();
 
-    public PascalParserTD(Scanner scanner) {
+    public PascalParserTD(PascalScanner scanner) {
         super(scanner);
+    }
+
+    public PascalParserTD(PascalParserTD parent) {
+        super(parent.getScanner());
     }
 
     @Override
     public void parse() throws Exception {
-        Token token;
+
         var startTime = System.currentTimeMillis();
+        iCode = ICodeFactory.createICode();
 
         try {
-            while (!((token = nextToken()) instanceof EOFToken)) {
-                var tokenType = token.getType();
+            Token token = nextToken();
+            ICodeNode rootNode = null;
 
-                if(tokenType == PascalTokenType.IDENTIFIER){
-                    var name = token.getText().toLowerCase();
+            if(token.getType() == PascalTokenType.BEGIN){
+                StatementParser statementParser = new StatementParser(this);
+                rootNode = statementParser.parse(token);
+                token = currentToken();
+            }else {
+                errorHandler.flag(token, PascalErrorCode.UNEXPECTED_TOKEN,this);
+            }
 
-                    var entry = symTabStack.lookup(name);
+            if(token.getType() != PascalTokenType.DOT){
+                errorHandler.flag(token, PascalErrorCode.MISSING_PERIOD, this);
+            }
+            token = currentToken();
 
-                    if(entry == null) entry = symTabStack.enterLocal(name);
-
-                    entry.appendLineNumber(token.getLineNum());
-                }
-                else if (tokenType == PascalTokenType.ERROR) {
-                    errorHandler.flag(token, (PascalErrorCode) token.getValue(), this);
-                }
+            if(rootNode != null){
+                iCode.setRoot(rootNode);
             }
 
             var elapsedTime = (System.currentTimeMillis() - startTime) / 1000f;

@@ -12,6 +12,7 @@ import lib.intermediate.SymTab;
 import lib.intermediate.SymTabStack;
 import lib.message.Message;
 import lib.message.MessageListener;
+import lib.util.ParseTreePrinter;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -47,6 +48,10 @@ public class Pascal {
                 var crossReferencer = new CrossReferencer();
 
                 crossReferencer.print(symTabStack);
+            }
+            if(intermediate){
+                var treePrinter = new ParseTreePrinter(System.out);
+                treePrinter.print(iCode);
             }
 
             backend.process(iCode,symTabStack);
