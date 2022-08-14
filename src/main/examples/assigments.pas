@@ -1,20 +1,26 @@
 BEGIN
-    BEGIN
+    BEGIN {Temperature conversions.}
         five := -1 + 2 - 3 + 4 + 3;
-        ratio := 10 / 2;
+        ratio := five/9;
         fahrenheit := 72;
-         centigrade := (fahrenheit - 32)*ratio;
+        centigrade := (fahrenheit - 32)*ratio;
 
-         centigrade := 25;
-         fahrenheit := centigrade/ratio + 32;
+        centigrade := 25;
+        fahrenheit := centigrade/ratio + 32;
 
-         centigrade := 25;
-         fahrenheit := 32 + centigrade/ratio
+        centigrade := 25;
+        fahrenheit := 32 + centigrade/ratio
     END;
+    {Runtime division by zero error}
     dze := fahrenheit/(ratio - ratio);
-    BEGIN
+
+    BEGIN {Calculate a square root using Newton's method.}
         number := 2;
         root := number;
+        root := (number/root + root)/2;
+        root := (number/root + root)/2;
+        root := (number/root + root)/2;
+        root := (number/root + root)/2;
         root := (number/root + root)/2;
     END;
 

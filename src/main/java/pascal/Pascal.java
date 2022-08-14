@@ -8,7 +8,6 @@ import lib.frontend.Parser;
 import lib.frontend.Source;
 import lib.frontend.TokenType;
 import lib.intermediate.ICode;
-import lib.intermediate.SymTab;
 import lib.intermediate.SymTabStack;
 import lib.message.Message;
 import lib.message.MessageListener;
@@ -191,11 +190,14 @@ public class Pascal {
             "\n%,20d instructions generated."+
             "\n%20.2f seconds total code generation time \n";
 
+    private static final String ASSIGN_FORMAT = " >>> LINE %03d: %s = %s\n";
+
     private class BackendMessageListener implements MessageListener{
 
         @Override
         public void messageReceived(Message message) {
             var messageType = message.getType();
+            boolean firstOutputMessage = false;
 
             switch (messageType){
                 case INTERPRETER_SUMMARY -> {
@@ -213,6 +215,31 @@ public class Pascal {
                     float elapsedTime = (float) body[1];
 
                     System.out.printf(COMPILER_SUMMARY_FORMAT, instructionCount,elapsedTime);
+                }
+                case ASSIGN -> {
+                    if(firstOutputMessage){
+                        System.out.println("\n===== OUTPUT =====\n");
+                        firstOutputMessage = false;
+                    }
+
+                    var body = (Object[]) message.getBody();
+                    var lineNumber = (int)body[0];
+                    var variableName = (String) body[1];
+                    var value = body[2];
+
+                    System.out.printf(ASSIGN_FORMAT,lineNumber,variableName,value);
+                }
+                case RUNTIME_ERROR -> {
+                    var body = (Object[]) message.getBody();
+
+                    var errorMessage = (String) body[0];
+                    var lineNumber = (Integer)body[1];
+
+                    System.out.println("*** RUNTIME ERROR");
+                    if(lineNumber != null){
+                        System.out.print(" AT LINE "+ String.format("%03d",lineNumber));
+                    }
+                    System.out.println(": " +errorMessage);
                 }
             }
         }
