@@ -17,6 +17,9 @@ import java.util.HashMap;
 
 
 public class ExpressionParser extends StatementParser{
+    static final EnumSet<PascalTokenType> EXPR_START_SET = EnumSet.of(PascalTokenType.PLUS,PascalTokenType.MINUS,PascalTokenType.IDENTIFIER,PascalTokenType.INTEGER,
+            PascalTokenType.REAL,PascalTokenType.STRING,PascalTokenType.NOT,PascalTokenType.LEFT_PAREN);
+
     public ExpressionParser(PascalParserTD parent) {
         super(parent);
     }

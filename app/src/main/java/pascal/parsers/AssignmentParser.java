@@ -9,7 +9,16 @@ import pascal.PascalErrorCode;
 import pascal.PascalParserTD;
 import pascal.PascalTokenType;
 
+import java.util.EnumSet;
+
 public class AssignmentParser extends StatementParser {
+    private static final EnumSet<PascalTokenType> COLON_EQUALS_SET = ExpressionParser.EXPR_START_SET.clone();
+
+    static {
+        COLON_EQUALS_SET.add(PascalTokenType.COLON_EQUALS);
+        COLON_EQUALS_SET.addAll(StatementParser.STMT_FOLLOW_SET);
+    }
+
     public AssignmentParser(PascalParserTD parent) {
         super(parent);
     }
@@ -30,6 +39,8 @@ public class AssignmentParser extends StatementParser {
         variableNode.setAttribute(ICodeKeyImpl.ID,targetId);
 
         assignNode.addChild(variableNode);
+
+        token = synchronize(COLON_EQUALS_SET);
 
         if(token.getType() == PascalTokenType.COLON_EQUALS){
             token = nextToken();

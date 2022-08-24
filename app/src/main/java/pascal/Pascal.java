@@ -69,22 +69,24 @@ public class Pascal {
         try {
             var operation = args[0];
 
-            if(!(operation.equalsIgnoreCase("compile") || operation.equalsIgnoreCase("execute"))) throw new Exception();
+            if (!(operation.equalsIgnoreCase("compile") || operation.equalsIgnoreCase("execute")))
+                throw new Exception();
 
             int i = 0;
             StringBuilder flags = new StringBuilder();
 
-             while ((++ i < args.length) && (args[i].charAt(0) == '-')){
-                 flags.append(args[i].substring(1));
-             }
-             if (i < args.length) {
-                 var path = args[i];
+            while ((++i < args.length) && (args[i].charAt(0) == '-')) {
+                flags.append(args[i].substring(1));
+            }
+            if (i < args.length) {
+                var path = args[i];
 
-                 new Pascal(operation,path, flags.toString());
-             }else throw new Exception();
-        }catch (Exception ex){
+                new Pascal(operation, path, flags.toString());
+            }
+        } catch (Exception ex) {
             System.out.println(USAGE);
         }
+
     }
 
     private static final String SOURCE_LINE_FORMAT = "%03d %s";

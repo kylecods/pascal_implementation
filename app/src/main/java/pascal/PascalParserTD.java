@@ -8,6 +8,7 @@ import lib.message.MessageType;
 import pascal.parsers.StatementParser;
 
 import java.io.IOException;
+import java.util.EnumSet;
 
 
 public class PascalParserTD extends Parser {
@@ -63,5 +64,18 @@ public class PascalParserTD extends Parser {
     @Override
     protected int getErrorCount() {
         return errorHandler.getErrorCount();
+    }
+
+    public Token synchronize(EnumSet syncSet) throws Exception{
+        var token = currentToken();
+
+        if(!syncSet.contains(token.getType())){
+            errorHandler.flag(token,PascalErrorCode.UNEXPECTED_TOKEN,this);
+
+            do {
+                token = nextToken();
+            }while (!(token instanceof EOFToken) && !syncSet.contains(token.getType()));
+        }
+        return token;
     }
 }

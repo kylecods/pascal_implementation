@@ -112,7 +112,7 @@ public class PascalNumberToken extends PascalToken {
     }
 
     private float computeFloatValue(String wholeDigits, String fractionDigits, String exponentDigits, char exponentSign){
-        var floatValue = 0.0;
+        double floatValue = 0.0;
         int exponentValue = computeIntegerValue(exponentDigits);
 
         String digits = wholeDigits;
@@ -133,7 +133,7 @@ public class PascalNumberToken extends PascalToken {
 
         int index = 0;
         while (index < digits.length()){
-            floatValue = 10*floatValue + Character.getNumericValue(digits.charAt(++index));
+            floatValue = 10 * floatValue + Character.getNumericValue(digits.charAt(index++));
         }
 
         if(exponentValue !=0) {

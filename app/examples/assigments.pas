@@ -1,7 +1,7 @@
 BEGIN
     BEGIN {Temperature conversions.}
         five := -1 + 2 - 3 + 4 + 3;
-        ratio := five/9;
+        ratio := five/9.0;
         fahrenheit := 72;
         centigrade := (fahrenheit - 32)*ratio;
 
