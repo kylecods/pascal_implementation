@@ -1,6 +1,6 @@
 package pascal.parsers;
 
-import lib.ICodeFactory;
+import factory.ICodeFactory;
 import lib.frontend.Token;
 import lib.intermediate.ICodeNode;
 import lib.intermediate.implementation.ICodeKeyImpl;

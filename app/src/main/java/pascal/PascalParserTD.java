@@ -1,6 +1,6 @@
 package pascal;
 
-import lib.ICodeFactory;
+import factory.ICodeFactory;
 import lib.frontend.*;
 import lib.intermediate.ICodeNode;
 import lib.message.Message;

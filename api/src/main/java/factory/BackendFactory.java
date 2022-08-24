@@ -1,4 +1,4 @@
-package lib;
+package factory;
 
 import lib.backend.Backend;
 import lib.compiler.CodeGenerator;

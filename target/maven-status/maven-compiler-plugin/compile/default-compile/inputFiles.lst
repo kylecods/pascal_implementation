@@ -3,10 +3,10 @@ C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\frontend\TokenType.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\frontend\EOFToken.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\frontend\Source.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\message\MessageHandler.java
-C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\FrontendFactory.java
+C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\pascal.FrontendFactory.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\message\Message.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\pascal\PascalParserTD.java
-C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\BackendFactory.java
+C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\factory.BackendFactory.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\compiler\CodeGenerator.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\frontend\Scanner.java
 C:\Users\Admin\IdeaProjects\Compiler\src\main\java\lib\message\MessageListener.java

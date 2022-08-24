@@ -1,9 +1,8 @@
-package lib;
+package pascal;
 
 import lib.frontend.Parser;
 import lib.frontend.Source;
-import pascal.PascalParserTD;
-import pascal.PascalScanner;
+
 
 public class FrontendFactory {
     public static Parser createParser(String lang, String type, Source source) throws Exception{

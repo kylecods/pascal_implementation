@@ -1,4 +1,4 @@
-lib\SymTabFactory.class
+lib\factory.SymTabFactory.class
 lib\intermediate\SymTabEntry.class
 pascal\tokens\PascalStringToken.class
 pascal\PascalErrorHandler.class
@@ -6,7 +6,7 @@ pascal\tokens\PascalNumberToken.class
 pascal\tokens\PascalWordToken.class
 lib\intermediate\implementation\SymTabEntryImpl.class
 lib\intermediate\SymTabKey.class
-lib\CrossReferencer.class
+lib\factory.CrossReferencer.class
 pascal\PascalToken.class
 pascal\tokens\PascalSpecialSymbolToken.class
 lib\intermediate\implementation\SymTabImpl.class

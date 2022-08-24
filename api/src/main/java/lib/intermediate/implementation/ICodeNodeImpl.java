@@ -3,7 +3,7 @@ package lib.intermediate.implementation;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import lib.ICodeFactory;
+import factory.ICodeFactory;
 import lib.intermediate.*;
 
 public class ICodeNodeImpl extends HashMap<ICodeKey, Object> implements ICodeNode{

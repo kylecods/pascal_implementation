@@ -4,7 +4,6 @@ import lib.frontend.TokenType;
 
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Locale;
 
 public enum PascalTokenType implements TokenType {
 

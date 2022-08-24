@@ -1,4 +1,4 @@
-package lib;
+package factory;
 
 import lib.intermediate.SymTab;
 import lib.intermediate.SymTabStack;

@@ -1,8 +1,7 @@
 package lib.frontend;
 
-import lib.SymTabFactory;
+import factory.SymTabFactory;
 import lib.intermediate.ICode;
-import lib.intermediate.SymTab;
 import lib.intermediate.SymTabStack;
 import lib.message.Message;
 import lib.message.MessageHandler;

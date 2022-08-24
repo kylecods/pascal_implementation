@@ -1,1 +1,1 @@
-java -jar .\app\build\libs\pascal.jar
+java -jar .\app\build\libs\dev_pascal.jar compile -i .\app\examples\repeat.pas

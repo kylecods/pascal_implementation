@@ -1,8 +1,7 @@
 package pascal;
 
-import lib.BackendFactory;
-import lib.CrossReferencer;
-import lib.FrontendFactory;
+import factory.BackendFactory;
+import factory.CrossReferencer;
 import lib.backend.Backend;
 import lib.frontend.Parser;
 import lib.frontend.Source;
@@ -56,7 +55,6 @@ public class Pascal {
             backend.process(iCode,symTabStack);
         }catch (Exception ex){
             System.out.println("***** Internal translator error ******");
-
             ex.printStackTrace();
         }
     }

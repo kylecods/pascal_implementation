@@ -1,4 +1,4 @@
-package lib;
+package factory;
 
 import lib.intermediate.*;
 import lib.intermediate.implementation.*;

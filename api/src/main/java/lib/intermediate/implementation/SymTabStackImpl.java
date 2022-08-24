@@ -1,6 +1,6 @@
 package lib.intermediate.implementation;
 
-import lib.SymTabFactory;
+import factory.SymTabFactory;
 import lib.intermediate.*;
 
 import java.util.ArrayList;
